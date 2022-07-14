@@ -1,9 +1,9 @@
 from pydub import AudioSegment
-from os import path
+from os import path, system
 
 
 def convert_audio(filename, outputFormat):
-    audio = AudioSegment.from_wav(path.join('/tmp', filename))
+    # audio = AudioSegment.from_wav(f'./{filename}')
     raw_name = filename
     if '.' in filename:
         # gets filename without file extension
@@ -13,9 +13,10 @@ def convert_audio(filename, outputFormat):
     print(f'convert {filename} to {outputFormat} as {output_name}')
 
     try:
-        audio.export(output_name, format=outputFormat)
+        system(f'ffmpeg -i \'{filename}\' \'{output_name}\' -y')
+        # audio.export(output_name, format=outputFormat)
     except:
-        print('error on exporting')
+        print('error on convertion')
 
     return output_name
 
